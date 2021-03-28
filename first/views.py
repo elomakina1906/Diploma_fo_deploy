@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse('<h1>First page</h1>')
+    return render(request, 'first/home.html')
 
 def about(request):
-    return HttpResponse('<h1>About page</h1>')
+    return render(request, 'first/about.html')
