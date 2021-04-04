@@ -1,4 +1,6 @@
+from django.http import HttpResponse
 from django.shortcuts import render
+
 
 posts = [
     {
@@ -20,4 +22,15 @@ def home(request):
     return render(request, 'first/home.html', context)
 
 def about(request):
-    return render(request, 'first/about.html', {'title': 'About'})
+    if 'q' in request.GET:
+        message = 'You searched for: %r' % request.GET['q']
+    else:
+        message = 'You submitted an empty form.'
+    m = {
+        'city': request.GET['city'],
+        'month': request.GET['month']
+    }
+    return render(request, 'first/about.html', m)
+
+#def about(request):
+ #   return render(request, 'first/about.html', {'title': 'About'})

@@ -1,6 +1,6 @@
 {% extends "first/base.html" %}
 {%  block content %}
-    {% for post in posts %}
+    {% comment %}{% for post in posts %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
@@ -10,5 +10,12 @@
             <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
           </div>
         </article>
-    {% endfor %}
+    {% endfor %}{% endcomment %}
+    <form action="/about/" method="get">
+        <h1>City</h1>
+        <input type="text" name="city"><br>
+        <h1>Month</h1>
+        <input type="text" name="month"><br><br>
+        <input type="submit" value="Search">
+    </form>
 {% endblock content %}
