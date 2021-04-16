@@ -1,0 +1,10 @@
+{% extends "first/base.html" %}
+{%  block content %}
+    {% for x in rating %}
+        <p>
+        {% for x0 in x %}
+            {{ x0 }}
+        {% endfor %}
+        </p>
+    {% endfor %}<br><br>
+{% endblock content %}

@@ -12,10 +12,12 @@
         </article>
     {% endfor %}{% endcomment %}
     <form action="/about/" method="get">
-        <h1>City</h1>
+        Город
         <input type="text" name="city"><br>
-        <h1>Month</h1>
-        <input type="text" name="month"><br><br>
-        <input type="submit" value="Search">
+        Месяц
+        <input type="text" name="month"><br>
+        Хочу увидеть топ-
+        <input type="text" name="top"><br><br>
+        <input type="submit" value="Показать">
     </form>
 {% endblock content %}
