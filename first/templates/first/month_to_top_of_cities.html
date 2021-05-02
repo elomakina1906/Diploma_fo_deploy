@@ -1,10 +1,10 @@
 {% extends "first/base.html" %}
 {%  block content %}
-    {% for x in rating %}
-        <p>
-        {% for x0 in x %}
-            {{ x0 }}
+    <div class="center">
+        {% for x in rating %}
+            {% for x0 in x %}
+                <h>{{ x0 }}</h>
+            {% endfor %}<br>
         {% endfor %}
-        </p>
-    {% endfor %}<br><br>
+    </div>
 {% endblock content %}

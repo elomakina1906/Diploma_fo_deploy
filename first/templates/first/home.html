@@ -1,23 +1,22 @@
 {% extends "first/base.html" %}
 {%  block content %}
-    {% comment %}{% for post in posts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date }}</small>
-            </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-          </div>
-        </article>
-    {% endfor %}{% endcomment %}
+    <div id="description">
+        <h id="bold">Как пользоваться сервисом?</h><br><br>
+
+        <h>Введите город => сервис покажет вам оценку этого города в каждом месяце</h><br>
+        <h>Введите месяц => сервис выдаст топ городов для посещения в этом месяце</h><br>
+        <h id = "indent-left">Размер топа можно регулировать с помощью специального поля</h><br>
+        <h>Введите город и месяц => сервис покажет вам оценку города в указанном месяце</h>
+    </div>
     <form action="/about/" method="get">
-        Город
-        <input type="text" name="city"><br>
-        Месяц
-        <input type="text" name="month"><br>
-        Хочу увидеть топ-
-        <input type="text" name="top"><br><br>
-        <input type="submit" value="Показать">
+    <div id="input">
+        <h class="indent-right">Город</h>
+        <input type="text" name="city" class="indent-right"><br><br>
+        <h class="indent-right">Месяц</h>
+        <input type="text" name="month" class="indent-right"><br><br>
+        Хочу увидеть топ -
+        <input type="text" name="top" class="indent-right"><br><br>
+        <input type="submit" value="Показать" class="button">
+    </div>
     </form>
 {% endblock content %}

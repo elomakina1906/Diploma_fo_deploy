@@ -32,7 +32,8 @@ def about(request):
     if city != "":
         if month != "":
             rating = {
-                'rating': rating_city_month(city, month)
+                'rating': rating_city_month(city, month),
+                'city': city
             }
             return render(request, 'first/about.html', rating)
         else:
