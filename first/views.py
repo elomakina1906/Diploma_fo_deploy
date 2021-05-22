@@ -1,75 +1,79 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 import pandas
 
 
-posts = [
-    {
-        'author': 'Author 1',
-        'title': 'Post 1',
-        'date': 'date 1'
-    },
-    {
-        'author': 'Author 2',
-        'title': 'Post 2',
-        'date': 'date 2'
-    }
-]
-
 def home(request):
-    context = {
-        'posts': posts
-    }
-    return render(request, 'first/home.html', context)
+    return render(request, 'first/home.html')
 
 
 def about(request):
-    city = request.GET['city']
-    month = request.GET['month']
+    data = pandas.read_csv('k3_csv_2.csv')
+    city = request.GET['city'].lower().strip()
+    month = request.GET['month'].lower().strip()
     top = request.GET['top']
     if top == "":
         top = 5
+    if not month_is_correct(month):
+        rating = {'rating': "Такого месяца не существует"}
+        return render(request, 'first/error.html', rating)
     if city != "":
         if month != "":
-            rating = {
-                'rating': rating_city_month(city, month),
-                'city': city
-            }
-            return render(request, 'first/about.html', rating)
+            r = rating_city_month(city, month, data)
+            if r != 0:
+                rating = {'rating': r}
+                return render(request, 'first/about.html', rating)
+            else:
+                rating = {'rating': "В базе данных нет такого города"}
+                return render(request, 'first/error.html', rating)
         else:
-            rating = {
-                'rating': rating_city(city)[:12]
-            }
-            return render(request, 'first/month_to_top_of_cities.html', rating)
+            r = rating_city(city, data)
+            if len(r) != 0:
+                rating = {'rating': rating_city(city, data)}
+                return render(request,
+                              'first/month_to_top_of_cities.html', rating)
+            else:
+                rating = {'rating': "В базе данных нет такого города"}
+                return render(request, 'first/error.html', rating)
     else:
-        rating = {
-            'rating': month_to_top_of_cities(month)[:int(top)]
-        }
-        return render(request, 'first/month_to_top_of_cities.html', rating)
+        if month != "":
+            rating = {'rating':
+                      month_to_top_of_cities(month, data)[:int(top)]}
+            return render(request, 'first/month_to_top_of_cities.html', rating)
+        else:
+            rating = {'rating': "Данные не введены"}
+            return render(request, 'first/error.html', rating)
 
 
-def rating_city_month(city, month):
-    data = pandas.read_csv('k3_csv_2.csv')
-    mark_sum = 0
+def month_is_correct(month):
+    months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
+              'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь', '']
+    res = False
+    for m in months:
+        if m == month:
+            res = True
+    return res
+
+
+def rating_city_month(city, month, data):
     mark_cnt = 0
-    city_we_need = city  # "Краснодар"
-    month_we_need = month  # "январь"
-    month_we_need = month_we_need[0:len(month_we_need) - 1]
+    mark_sum = 0
+    month_we_need = month[0:len(month) - 1]
     for value in data.iloc:
-        if value['город'] == city_we_need:
+        if value['город'].lower().strip() == city:
             month = value['дата'].split(' ')[3]
             if month.startswith(month_we_need):
                 mark_sum += value['оценка']
                 mark_cnt += 1
-    return mark_sum / mark_cnt
+    if mark_cnt != 0:
+        return mark_sum / mark_cnt
+    else:
+        return 0
 
 
-def rating_city(city):
-    data = pandas.read_csv('k3_csv_2.csv')
-    city_we_need = city
+def rating_city(city, data):
     d = {}  # Ключ: месяц; Значение list(сумма оценок, количество оценок)
     for value in data.iloc:
-        if value['город'] == city_we_need:
+        if value['город'].lower().strip() == city:
             month = value['дата'].split(' ')[3]
             if d.get(month) is not None:
                 d[month][0] += value['оценка']
@@ -79,11 +83,9 @@ def rating_city(city):
     lst = []
     for x in d:
         new_x = x.title()[0:len(x) - 2]
-        if new_x.startswith('Март') | new_x.startswith('Август'):
-            new_x += ''
-        else:
+        if not (new_x.startswith('Март') | new_x.startswith('Август')):
             if new_x.startswith('Ма'):
-                new_x += 'я'
+                new_x += 'й'
             else:
                 new_x += 'ь'
         lst.append([new_x, d[x][0] / d[x][1]])
@@ -91,10 +93,8 @@ def rating_city(city):
     return lst
 
 
-def month_to_top_of_cities(month):
-    data = pandas.read_csv('k3_csv_2.csv')
-    month_we_need = month
-    month_we_need = month_we_need[0:len(month_we_need) - 1]
+def month_to_top_of_cities(month, data):
+    month_we_need = month[0:len(month) - 1]
     d = {}  # Ключ: город; Значение: list(сумма оценок, количество оценок)
     for value in data.iloc:
         month_split = value['дата'].split(' ')
@@ -109,7 +109,5 @@ def month_to_top_of_cities(month):
     lst = []
     for x in d:
         lst.append([x, d[x][0] / d[x][1]])
-    # print(lst)
     lst = sorted(lst, key=lambda rec: rec[1]*(-1))
-    # print(lst)
     return lst
