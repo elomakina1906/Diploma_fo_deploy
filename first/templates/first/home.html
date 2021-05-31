@@ -1,21 +1,37 @@
 {% extends "first/base.html" %}
 {%  block content %}
     <div id="description">
-        <h id="bold">Как пользоваться сервисом?</h><br><br>
-        <h>Введите город => сервис покажет вам оценку этого города в каждом месяце</h><br>
-        <h>Введите месяц => сервис выдаст топ городов для посещения в этом месяце</h><br>
-        <h id = "indent-left">Размер топа можно регулировать с помощью специального поля</h><br>
-        <h>Введите город и месяц => сервис покажет вам оценку города в указанном месяце</h>
+        <h2 id="bold">WHERE TO GO</h2>
+        <h5>Сервис для подбора перспективных направлений путешествий по России</h5><br><br>
+        <h5 class="form">Как пользоваться?</h5>
+        <h5>Введите город => сервис покажет вам оценку этого города в каждом месяце<br>
+            Введите месяц => сервис выдаст топ городов для посещения в этом месяце<br>
+            Размер топа можно регулировать с помощью специального поля<br>
+            Введите город и месяц => сервис покажет вам оценку города в указанном месяце</h5>
     </div>
-    <form action="/about/" method="get">
+    <br><br><br>
+    <form action="/about/" method="get" class="div-form">
     <div id="input">
-        <h class="indent-right">Город</h>
-        <input type="text" name="city" class="indent-right"><br><br>
-        <h class="indent-right">Месяц</h>
+        <h class="form">Город</h>
+        <input type="text" name="city" class="create-form"><br><br>
+        <h class="form">Месяц</h>
         <input type="text" name="month" class="indent-right"><br><br>
-        Хочу увидеть топ -
+        <h class="form">Хочу увидеть топ -</h>
         <input type="text" name="top" class="indent-right"><br><br>
-        <input type="submit" value="Показать" class="button">
+        <input type="submit" value="Показать" class="create-form submit-form">
     </div>
     </form>
+
+    <footer id="ftr">
+    <div class="footer-content">
+      <div class="footer-columns">
+        <div class="footer-column">
+          <span class="copyright">Copyright © 2021</span><br>
+            <li class="footer-link"><a href="https://vk.com/orlova_evgenis">VK</a></li>
+            <li class="footer-link"><a href="https://www.instagram.com/orlova_evgenis/">Instagram</a></li>
+            <li class="footer-link"><a href="http://t.me/orlova_evgenis">Telegram</a></li>
+        </div>
+      </div>
+    </div>
+  </footer>
 {% endblock content %}
