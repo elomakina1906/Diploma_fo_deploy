@@ -65,7 +65,7 @@ def rating_city_month(city, month, data):
                 mark_sum += value['оценка']
                 mark_cnt += 1
     if mark_cnt != 0:
-        return mark_sum / mark_cnt
+        return round(mark_sum / mark_cnt, 1)
     else:
         return 0
 
@@ -88,7 +88,7 @@ def rating_city(city, data):
                 new_x += 'й'
             else:
                 new_x += 'ь'
-        lst.append([new_x, d[x][0] / d[x][1]])
+        lst.append([new_x, round(d[x][0] / d[x][1], 1)])
     lst = sorted(lst, key=lambda rec: rec[1]*(-1))
     return lst
 
@@ -110,5 +110,5 @@ def month_to_top_of_cities(month, data):
     i = 0
     for x in d:
         i += 1
-        lst.append([x, d[x][0] / d[x][1]])
+        lst.append([x, round(d[x][0] / d[x][1], 1)])
     return sorted(lst, key=lambda rec: rec[1]*(-1))
