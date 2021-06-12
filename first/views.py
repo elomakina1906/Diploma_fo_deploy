@@ -7,7 +7,7 @@ def home(request):
 
 
 def about(request):
-    data = pandas.read_csv('k4.csv')
+    data = pandas.read_csv("/Users/thohang/PycharmProjects/Diploma_dj/k4.csv")
     city = request.GET['city'].lower().strip()
     month = request.GET['month'].lower().strip()
     top = request.GET['top']
