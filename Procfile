@@ -1,1 +1,1 @@
-web: unicorn Diploma_dj.wsgi
+web: gunicorn Diploma_dj.wsgi
