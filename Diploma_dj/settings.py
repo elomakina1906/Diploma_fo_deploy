@@ -26,7 +26,7 @@ SECRET_KEY = '&9&9b^wien4r0qa*!3sigj#bi)zr478$#t4!z=@+d*!=6bj+b6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['diploma-app-lomakina.herokuapp.com', 'localhost']
 
 
 # Application definition
